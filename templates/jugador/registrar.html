@@ -1,0 +1,5 @@
+<h1>registrar jugador</h1>
+<form method='POST'>{% csrf_token %}
+    {{ form.as_p}}
+    <button type='submit'> registrar</button>
+</form>

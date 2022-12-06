@@ -6,7 +6,7 @@ class Jugador(models.Model):
 
     nombre = models.CharField('Nombre', max_length=30)
     apellido = models.CharField('Apellido', max_length=30, blank=True)
-    fecha_nacimento = models.DateField()
+    fecha_nacimiento = models.DateField()
     dni = models.PositiveIntegerField()  
     sueldo = models.PositiveIntegerField()
     

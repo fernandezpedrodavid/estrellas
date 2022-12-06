@@ -8,22 +8,24 @@ app_name = 'jugador_app'
 #urls para jugador
 urlpatterns = [
     path(
-        'jugador/',
-        views.JugadorView.as_view(),
-        name='jugador'
+        'add.jugador/',
+        views.RegistrarJugador.as_view(),
+        name='registrar'
+    ),
+    path(
+        'mod.jugador/<pk>/',
+        views.JugadorUpView.as_view(),
+        name='modificar'
+    ),
+    path(
+        'list.jugador/',
+        views.JugadorListView.as_view(),
+        name='jugadores'
     ),
      
 #urls para país
-    path(
-        'país/',
-        views.PaísView.as_view(),
-        name='país'
-    ),  
+    
     
 #urls para posición
-    path(
-        'puesto/',
-        views.PosiciónView.as_view(),
-        name='posición'
-    ),       
+          
 ]
