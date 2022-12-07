@@ -1,5 +1,5 @@
 <h1>Lista de jugadores</h1>
-
+<a href="{% url 'jugador_app:jugadorxnombre'%}">buscar</a>
 
 {% block content %}
 <ul>
@@ -29,3 +29,6 @@
     </table>          
 </ul>
 {%endblock%}
+
+<a href="{% url 'jugador_app:agr_país'%}">Agregar País</a>
+<a href="{% url 'jugador_app:agr_puesto'%}">Agregar Posición</a>

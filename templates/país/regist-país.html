@@ -1,3 +1,8 @@
 <h1>Agregar País</h1>
 
-{{ form.as_p }}
+<form method='POST'>{% csrf_token %}
+    {{ form.as_p}}
+    <button type='submit'> registrar</button>
+</form>
+
+

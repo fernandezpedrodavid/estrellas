@@ -22,9 +22,10 @@ class Jugador(models.Model):
 
 class País(models.Model):
     """Model definition for País."""
-
-    país = models.CharField('País', max_length=30)
-    jugador = models.ForeignKey(Jugador, on_delete=models.CASCADE)
+    
+    país = models.CharField('País', max_length=30, null=True)
+    club = models.CharField('Club', max_length=50, null=True)
+    jugador = models.ForeignKey(Jugador, on_delete=models.CASCADE, null=True)
 
     class Meta:
         """Meta definition for País."""
@@ -33,7 +34,7 @@ class País(models.Model):
         verbose_name_plural = 'Países'
 
     def __str__(self):
-        return self.país + '-' + self.jugador.nombre + '-' + self.jugador.apellido
+        return self.país + '-'+ self.club + '-' + self.jugador.nombre + '-' + self.jugador.apellido
     
     
 class Posición(models.Model):

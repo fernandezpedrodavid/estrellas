@@ -81,6 +81,7 @@ class AgregarPaís(CreateView):
     template_name = 'país/regist-país.html'
     model = País
     fields = ('__all__')
+    success_url = 'list-país/'    
     
     
 class PaísList(ListView):
@@ -96,4 +97,4 @@ class PosiciónView(CreateView):
     template_name = "posición/puesto.html" 
     model = Posición      
     fields = ('__all__')
-
+     
