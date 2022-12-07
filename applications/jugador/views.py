@@ -2,12 +2,11 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 
 from django.views.generic import (
+    CreateView,
     UpdateView,
     ListView,
-)
-
-from django.views.generic.edit import(
-    FormView
+    DeleteView,
+    DetailView,
 )
 
 from .forms import (
@@ -15,26 +14,22 @@ from .forms import (
 )
 #
 
-from .models import Jugador
+from .models import (
+    Jugador,
+    País,
+    Posición,
+)
 
 """views de jugador"""
 
-class RegistrarJugador(FormView):
+class RegistrarJugador(CreateView):
     template_name = 'jugador/registrar.html'
-    form_class =  JugadorRegisterForm
-    #success_url = reverse_lazy('jugador_app:lista-jugador')
+    model = Jugador
+    form_class = JugadorRegisterForm
+    success_url = reverse_lazy('jugador_app:jugadores')
     
-    def form_valid(self, form):
-        
-        Jugador.objects.create_user(
-            form.cleaned_data['fecha_nacimiento'],
-            form.cleaned_data['dni'],
-            form.cleaned_data['sueldo'],
-            nombre=form.cleaned_data['nombre'],
-            apellido=form.cleaned_data['apellido'],
-            
-        )  
-        return super(RegistrarJugador, self).form_valid(form)
+     
+    
 
 class JugadorUpView(UpdateView):
     template_name = "jugador/mod-jugador.html"
@@ -46,7 +41,8 @@ class JugadorUpView(UpdateView):
         'dni',
         'sueldo',
     ]
-    #success_url = '/lista/jugador/'
+    success_url = reverse_lazy('jugador_app:jugadores')
+
 
 class JugadorListView(ListView):
     template_name = "jugador/list-jugador.html"
@@ -54,15 +50,50 @@ class JugadorListView(ListView):
     
     def get_queryset(self):
         return Jugador.objects.all()    
+ 
+
+class ListJugadorByKword(ListView):
+    """lista jugadores por palabra clave"""
+    template_name = 'jugador/by_kword.html'
+    context_object_name = 'jugadores'
+    
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get("kword", "")
+        lista = Jugador.objects.filter(
+            nombre = palabra_clave
+        )
+        return lista
+
+ 
+class JugadorDetail(DetailView):
+    model = Jugador
+    template_name = "jugador/detail_jugador.html"
+ 
+    
+class JugadorDeleteView(DeleteView):
+    template_name = "jugador/del-jugador.html"
+    model = Jugador
+    success_url = 'list.jugador/'    
 
 """views de país"""    
     
-#class PaísView(TemplateView):
-    #template_name = "país/país.html"
+class AgregarPaís(CreateView):
+    template_name = 'país/regist-país.html'
+    model = País
+    fields = ('__all__')
+    
+    
+class PaísList(ListView):
+    template_name = "país/list-país.html"
+    context_object_name = 'país'
+    
+    def get_queryset(self):
+        return País.objects.all()      
 
 """views de posición"""    
     
-#class PosiciónView(TemplateView):
-    #template_name = "posición/puesto.html"       
-
+class PosiciónView(CreateView):
+    template_name = "posición/puesto.html" 
+    model = Posición      
+    fields = ('__all__')
 

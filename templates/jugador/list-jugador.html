@@ -1,3 +1,31 @@
 <h1>Lista de jugadores</h1>
 
-#
+
+{% block content %}
+<ul>
+    <table class="unstriped">
+        <thead style=>
+          <tr>
+            <th width="200">Nombre</th>
+            <th width="200">Apellido</th>
+            <th width="200">Sueldo</th>
+            <th width="200">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for jugador in jugadores %}
+          <tr>
+            <td>{{ jugador.nombre}}</td>
+            <td>{{ jugador.apellido}}</td>
+            <td>{{ jugador.sueldo}}</td>
+            <td>
+              <a href="{% url 'jugador_app:jugadordetail' jugador.id %}">Ver</a>
+              <a href="{% url 'jugador_app:modificar' jugador.id %}">Modificar</a>
+              <a href="{% url 'jugador_app:del-jugador' jugador.id %}">Eliminar</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>          
+</ul>
+{%endblock%}
