@@ -49,6 +49,11 @@ urlpatterns = [
         views.PaísList.as_view(),
         name='list_país'
     ),
+    path(
+        'join-país/',
+        views.PaísList.as_view(),
+        name='país_join'
+    ),
     
 #urls para posición
     path(
