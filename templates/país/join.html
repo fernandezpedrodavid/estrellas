@@ -1,0 +1,10 @@
+<h1> mostrar join</h1>
+
+
+{% for país in países %}
+    <li>{{ país.jugador.nombre }}</li>
+    <li>{{ país.jugador.apellido }}</li>
+    <li>{{ país.país }}</li>
+    <li>{{ país.club }}</li>
+{% endfor %}
+    

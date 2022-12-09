@@ -89,7 +89,16 @@ class PaísList(ListView):
     context_object_name = 'país'
     
     def get_queryset(self):
-        return País.objects.all()      
+        return País.objects.all()  
+    
+class PaísJoin(ListView):
+    template_name = "país/join.html"
+    context_object_name = 'países'
+    
+    def get_queryset(self):
+        país_join = País.objects.select_related().all()
+        return país_join
+        
 
 """views de posición"""    
     
