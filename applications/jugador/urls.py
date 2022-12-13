@@ -61,5 +61,10 @@ urlpatterns = [
         views.PosiciónView.as_view(),
         name='agr_puesto'
     ),
+    path(
+        'list-posición/',
+        views.PosiciónList.as_view(),
+        name='posiciones'
+    ),
              
 ]

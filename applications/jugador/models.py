@@ -17,7 +17,7 @@ class Jugador(models.Model):
         verbose_name_plural = 'Jugadores'
 
     def __str__(self):
-        return self.nombre + '-' + self.apellido + '-' + str(self.fecha_nacimiento)
+        return str(self.id)+ '-' + self.nombre + '-' + self.apellido + '-' + str(self.fecha_nacimiento)
 
 
 class País(models.Model):

@@ -3,39 +3,34 @@
 
 {% block content %}
   <ul>
-    <table class="unstriped">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Sueldo</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
         <tbody>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Sueldo</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for jugador in jugadores %}
-                <tr>
-                  <th scope="row">1</th>
-                  <td>{{ jugador.nombre}}</td>
-                  <td>{{ jugador.apellido}}</td>
-                  <td>{{ jugador.sueldo}}</td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                      <a class="btn btn-info" href="http://127.0.0.1:8000/detail-jugador/%3Cpk%3E/">ver</a>
-                      <a class="btn btn-warning">modificar</a>
-                      <a class="btn btn-danger">borrar</a>
-                    </div>
-                  </td>
-                </tr>              
-              {% endfor %}
-            </tbody>
+          {% for jugador in jugadores %}
+            <tr>
+              <th scope="row"></th>
+                <td>{{ jugador.nombre}}</td>
+                <td>{{ jugador.apellido}}</td>
+                <td>{{ jugador.sueldo}}</td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <a class="btn btn-info" href="{% url 'jugador_app:jugadordetail' jugador.id %}"  role="button">ver</a>
+                    <a class="btn btn-warning" href="{% url 'jugador_app:modificar' jugador.id %}">modificar</a>
+                    <a class="btn btn-danger" href="{% url 'jugador_app:del-jugador' jugador.id %}">borrar</a>
+                  </div>
+                </td>
+              </tr> 
+            <a href="{% url 'jugador_app:jugadorxnombre'%}">buscar</a>             
+            {% endfor %}
         </tbody>
-    </table>          
+      </table>          
   </ul>
-{%endblock%}
-
-<a href="{% url 'jugador_app:agr_país'%}">Agregar País</a>
-<a href="{% url 'jugador_app:agr_puesto'%}">Agregar Posición</a>
+{% endblock %}

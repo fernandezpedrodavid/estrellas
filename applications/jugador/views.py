@@ -105,4 +105,11 @@ class PosiciónView(CreateView):
     template_name = "posición/puesto.html" 
     model = Posición      
     fields = ('__all__')
+    
+class PosiciónList(ListView):
+    template_name = "posición/list-posición.html"
+    context_object_name = 'posiciones'
+    
+    def get_queryset(self):
+        return Posición.objects.all()  
      
