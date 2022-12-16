@@ -97,7 +97,7 @@ class PaísJoin(ListView):
     
     def get_queryset(self):
         país_join = País.objects.select_related().all()
-        return país_join()     
+        return país_join    
 
 """views de posición"""    
     
@@ -105,11 +105,18 @@ class PosiciónView(CreateView):
     template_name = "posición/puesto.html" 
     model = Posición      
     fields = ('__all__')
+    success_url = reverse_lazy('jugador_app:posiciones')
+    
     
 class PosiciónList(ListView):
     template_name = "posición/list-posición.html"
     context_object_name = 'posiciones'
     
     def get_queryset(self):
-        return Posición.objects.all()  
+        return Posición.objects.all() 
      
+     
+class PosiciónDelete(DeleteView):
+    template_name = "posición/del-puesto.html"
+    model = Jugador
+    success_url = 'list.jugador/'

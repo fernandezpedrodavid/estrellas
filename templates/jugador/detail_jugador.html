@@ -1,6 +1,20 @@
+{% extends 'base.html' %}
 
-<p>{{ jugador.nombre}}</p>
-<p>{{ jugador.apellido }}</p>
-<p>{{ jugador.fecha_nacimiento }}</p>
-<p>{{ jugador.dni }}</p>
-<p>{{ jugador.sueldo }}</p>
+
+{% block content %}
+  <div class="card text-bg-success mb-3" style="max-width: 18rem;">
+    <div class="card-header">
+    <h5>Datos personales</h5>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text">
+        <p>{{ jugador.nombre}}</p>
+        <p>{{ jugador.apellido }}</p>
+        <p>{{ jugador.fecha_nacimiento }}</p>
+        <p>{{ jugador.dni }}</p>
+        <p>{{ jugador.sueldo }}</p> 
+      </p>
+    </div>
+  </div> 
+{% endblock content %}

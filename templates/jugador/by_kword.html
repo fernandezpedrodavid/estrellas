@@ -1,10 +1,33 @@
-<h1>Buscar empleados por palabra clave</h1>
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+  <div class="card text-bg-success mb-3" style="max-width: 18rem;">
+    <div class="card-header">
+    <h5>Buscar por nombre</h5>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text">
+        <form method="GET">{% csrf_token %}
+            <input type="text" id="kword" name="kword" placeholder="ingese nombre aquí">
+            <button type="submit" class="bg-danger border-white text-white" >Buscar</button>
+        </form>
+        <ul>
+            {% for jugador in jugadores %}
+                <li>{{jugador}}</li>
+            {% endfor %}
+        </ul>
+      </p>
+    </div>
+  </div>   
+{% endblock content %}
+    
 <form method="GET">{% csrf_token %}
     <input type="text" id="kword" name="kword" placeholder="ingese nombre aquí">
     <button type="submit">Buscar</button>
 </form>
-
-<h3>Lista resultados</h3>
 <ul>
     {% for jugador in jugadores %}
         <li>{{jugador}}</li>

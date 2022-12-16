@@ -1,6 +1,19 @@
-<h1>acá juego</h1>
+{% extends 'base.html' %}
 
-<form method='POST'>{% csrf_token %}
-    {{ form.as_p}}
-    <button type='submit'> guardar</button>
-</form>
+
+{% block content %}
+  <div class="card text-bg-success mb-3" style="max-width: 18rem;">
+    <div class="card-header">
+    <h5>Posición</h5>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text">
+        <form method='POST'>{% csrf_token %}
+            {{ form.as_p}}
+            <button type='submit' class="bg-danger text-white border" >Registrar</button>
+        </form>
+      </p>
+    </div>
+  </div>  
+{% endblock content %}

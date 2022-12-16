@@ -51,7 +51,7 @@ urlpatterns = [
     ),
     path(
         'join-país/',
-        views.PaísList.as_view(),
+        views.PaísJoin.as_view(),
         name='país_join'
     ),
     
@@ -65,6 +65,11 @@ urlpatterns = [
         'list-posición/',
         views.PosiciónList.as_view(),
         name='posiciones'
+    ),
+    path(
+        'del-posición/<pk>',
+        views.PosiciónDelete.as_view(),
+        name='del-puesto'
     ),
              
 ]
