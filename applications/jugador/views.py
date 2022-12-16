@@ -7,6 +7,7 @@ from django.views.generic import (
     ListView,
     DeleteView,
     DetailView,
+    View,
 )
 
 from .forms import (
@@ -73,7 +74,9 @@ class JugadorDetail(DetailView):
 class JugadorDeleteView(DeleteView):
     template_name = "jugador/del-jugador.html"
     model = Jugador
-    success_url = 'list.jugador/'    
+    success_url = 'list.jugador/' 
+
+       
 
 """views de país"""    
     

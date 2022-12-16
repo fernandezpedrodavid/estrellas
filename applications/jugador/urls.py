@@ -37,6 +37,7 @@ urlpatterns = [
         views.JugadorDetail.as_view(),
         name='jugadordetail'
     ),
+    
      
 #urls para país
     path(
