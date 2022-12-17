@@ -37,6 +37,7 @@ urlpatterns = [
         views.JugadorDetail.as_view(),
         name='jugadordetail'
     ),
+    
      
 #urls para país
     path(
@@ -60,6 +61,16 @@ urlpatterns = [
         'add-posición/',
         views.PosiciónView.as_view(),
         name='agr_puesto'
+    ),
+    path(
+        'list-posición/',
+        views.PosiciónList.as_view(),
+        name='posiciones'
+    ),
+    path(
+        'del-posición/<pk>',
+        views.PosiciónDelete.as_view(),
+        name='del-puesto'
     ),
              
 ]

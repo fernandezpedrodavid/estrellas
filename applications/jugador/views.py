@@ -7,6 +7,7 @@ from django.views.generic import (
     ListView,
     DeleteView,
     DetailView,
+    View,
 )
 
 from .forms import (
@@ -73,7 +74,9 @@ class JugadorDetail(DetailView):
 class JugadorDeleteView(DeleteView):
     template_name = "jugador/del-jugador.html"
     model = Jugador
-    success_url = 'list.jugador/'    
+    success_url = 'list.jugador/' 
+
+       
 
 """views de país"""    
     
@@ -106,4 +109,18 @@ class PosiciónView(CreateView):
     template_name = "posición/puesto.html" 
     model = Posición      
     fields = ('__all__')
+    success_url = reverse_lazy('jugador_app:posiciones')
+    
+    
+class PosiciónList(ListView):
+    template_name = "posición/list-posición.html"
+    context_object_name = 'posiciones'
+    
+    def get_queryset(self):
+        return Posición.objects.all() 
      
+     
+class PosiciónDelete(DeleteView):
+    template_name = "posición/del-puesto.html"
+    model = Jugador
+    success_url = 'list.jugador/'
