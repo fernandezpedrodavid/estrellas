@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <ul>
+    <table class="table table-success table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Sueldo</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody> 
+          {% for s in salarios %}
+            <tr>
+              <th scope="row">
+                <td>{{ s.nombre}}</td>
+                <td>{{ s.apellido}}</td>
+                <td>{{ s.sueldo}}</td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <a class="btn btn-info" href="#"  role="button">ver</a>
+                    <a class="btn btn-warning" href="#">modificar</a>
+                    <a class="btn btn-danger" href="#">borrar</a>
+                  </div>
+                </td>
+              </th>
+            </tr> 
+          {% endfor %}
+        </tbody>
+      </table> 
+      <a class="btn btn-primary " href="#" role="button">Nuevo Jugador</a>    
+  </ul>
+{% endblock content %}
+
+
