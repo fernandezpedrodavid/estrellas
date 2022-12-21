@@ -37,7 +37,26 @@ urlpatterns = [
         views.JugadorDetail.as_view(),
         name='jugadordetail'
     ),
-    
+    path(
+        'sueldo-jugador/',
+        views.JugadorSalario.as_view(),
+        name='sueldos'
+    ),
+    path(
+        'sueldo-menor/',
+        views.SueldoBajo.as_view(),
+        name='sueldo-bajo'
+    ),
+    path(
+        'sueldo-mayor/',
+        views.SueldoAlto.as_view(),
+        name='sueldo-alto'
+    ),
+    path(
+        'diferencia/',
+        views.SueldoDif.as_view(),
+        name='sueldo-dif'
+    ),
      
 #urls para país
     path(

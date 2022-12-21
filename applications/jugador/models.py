@@ -1,5 +1,7 @@
 from django.db import models
 
+from .managers import SueldoManager
+
 # Create your models here.
 class Jugador(models.Model):
     """Model definition for Jugador."""
@@ -10,6 +12,7 @@ class Jugador(models.Model):
     dni = models.PositiveIntegerField()  
     sueldo = models.PositiveIntegerField()
     
+    objects = SueldoManager()
     
     class Meta:       
 

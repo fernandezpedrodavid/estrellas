@@ -52,6 +52,41 @@ class JugadorListView(ListView):
     def get_queryset(self):
         return Jugador.objects.all()    
  
+ 
+class JugadorSalario(ListView):
+    template_name = "jugador/sueldo-jugador.html"
+    context_object_name = 'salarios'
+    
+    def get_queryset(self):
+        return Jugador.objects.all()
+   
+   
+class SueldoBajo(ListView):
+    template_name = "jugador/sueldo-menor.html"
+    context_object_name = 'jugadores'
+    
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get("kword", '')
+        return Jugador.objects.sueldobajo(palabra_clave)
+    
+    
+class SueldoAlto(ListView):
+    template_name = "jugador/sueldo-alto.html"
+    context_object_name = 'jugadores'
+    
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get("kword", '')
+        return Jugador.objects.sueldoalto(palabra_clave)
+    
+
+class SueldoDif(ListView):
+    template_name = "jugador/diferencia.html"
+    context_object_name = 'jugadores'
+    
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get("kword", '')
+        return Jugador.objects.Diferencia(palabra_clave)
+        
 
 class ListJugadorByKword(ListView):
     """lista jugadores por palabra clave"""
@@ -61,7 +96,7 @@ class ListJugadorByKword(ListView):
     def get_queryset(self):
         palabra_clave = self.request.GET.get("kword", "")
         lista = Jugador.objects.filter(
-            nombre = palabra_clave
+            sueldo = palabra_clave
         )
         return lista
 
