@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db.models import Count, Avg, Sum
 
 class SueldoManager(models.Manager):
     """Model definition for SueldoManager."""
@@ -17,4 +17,18 @@ class SueldoManager(models.Manager):
         ).order_by('apellido', 'nombre', 'sueldo')
         return sueldoalto
     
+    
+    def num_jugadores(self):
+        resultado = self.values(
+            'nombre'    
+        ).annotate(
+            num_jugadores=Count('nombre'),
+            
+        )
+        
+        for r in resultado:
+            print('========')
+            print(r, r['num_jugadores'])
+            
+        return resultado    
     

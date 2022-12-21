@@ -7,7 +7,7 @@ from django.views.generic import (
     ListView,
     DeleteView,
     DetailView,
-    View,
+    TemplateView,
 )
 
 from .forms import (
@@ -96,7 +96,7 @@ class ListJugadorByKword(ListView):
     def get_queryset(self):
         palabra_clave = self.request.GET.get("kword", "")
         lista = Jugador.objects.filter(
-            sueldo = palabra_clave
+            nombre = palabra_clave
         )
         return lista
 
@@ -104,13 +104,12 @@ class ListJugadorByKword(ListView):
 class JugadorDetail(DetailView):
     model = Jugador
     template_name = "jugador/detail_jugador.html"
- 
+    
     
 class JugadorDeleteView(DeleteView):
     template_name = "jugador/del-jugador.html"
     model = Jugador
     success_url = 'list.jugador/' 
-
        
 
 """views de país"""    
