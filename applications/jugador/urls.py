@@ -57,6 +57,17 @@ urlpatterns = [
         views.SueldoDif.as_view(),
         name='sueldo-dif'
     ),
+    path(
+        'num-jugadores/',
+        views.NumJugadores.as_view(),
+        name='cantidad'
+    ),
+    path(
+        'leer-registro/',
+        views.Registro.as_view(),
+        name='leer'
+    ),
+    
      
 #urls para país
     path(

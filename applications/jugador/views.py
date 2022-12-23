@@ -21,6 +21,8 @@ from .models import (
     Posición,
 )
 
+
+
 """views de jugador"""
 
 class RegistrarJugador(CreateView):
@@ -86,6 +88,14 @@ class SueldoDif(ListView):
     def get_queryset(self):
         palabra_clave = self.request.GET.get("kword", '')
         return Jugador.objects.Diferencia(palabra_clave)
+    
+class NumJugadores(ListView):
+    template_name = "jugador/numero.html"
+    context_object_name = 'jugadores'
+        
+    def get_queryset(self):
+
+        return Jugador.objects.num_jugadores()
         
 
 class ListJugadorByKword(ListView):
@@ -106,10 +116,26 @@ class JugadorDetail(DetailView):
     template_name = "jugador/detail_jugador.html"
     
     
+    
+    
 class JugadorDeleteView(DeleteView):
     template_name = "jugador/del-jugador.html"
     model = Jugador
     success_url = 'list.jugador/' 
+    
+    
+
+class Registro(ListView):
+    template_name = "jugador/registro.html"
+    context_object_name = 'leer'
+    
+    def get_queryset(self):
+        with open('registro.txt', encoding='latin-1')as file_object:
+            leer = file_object.read()
+
+        return leer
+    
+
        
 
 """views de país"""    

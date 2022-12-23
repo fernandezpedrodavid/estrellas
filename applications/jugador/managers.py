@@ -19,16 +19,8 @@ class SueldoManager(models.Manager):
     
     
     def num_jugadores(self):
-        resultado = self.values(
-            'nombre'    
-        ).annotate(
-            num_jugadores=Count('nombre'),
-            
-        )
-        
-        for r in resultado:
-            print('========')
-            print(r, r['num_jugadores'])
-            
+        resultado = self.filter(
+            nombre=Count('id'),
+        )           
         return resultado    
     
