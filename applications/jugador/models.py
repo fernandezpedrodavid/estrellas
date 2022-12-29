@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Jugador(models.Model):
     """Model definition for Jugador."""
@@ -9,7 +10,6 @@ class Jugador(models.Model):
     fecha_nacimiento = models.DateField()
     dni = models.PositiveIntegerField()  
     sueldo = models.PositiveIntegerField()
-    
     
     class Meta:       
 
@@ -47,7 +47,7 @@ class Posición(models.Model):
         ('3', 'Delantero'),
     )
     
-    posición = models.CharField('Posición', max_length=1, choices=PUESTO_CHOICES)
+    posición = models.CharField('Posición', max_length=3, choices=PUESTO_CHOICES)
     jugador = models.ForeignKey(Jugador, on_delete=models.CASCADE)
     
     class Meta:

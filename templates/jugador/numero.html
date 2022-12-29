@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <div class="card text-bg-success mb-3" style="max-width: 18rem;">
+    <div class="card-header">
+    <h5>Cantidad de Jugadores</h5>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"></h5>
+      <p class="card-text">
+        <ul>
+          {{ form.as_p }}
+        </ul>
+      </p>
+    </div>
+  </div> 
+{% endblock content %}

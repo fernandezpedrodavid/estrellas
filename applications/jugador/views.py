@@ -7,7 +7,7 @@ from django.views.generic import (
     ListView,
     DeleteView,
     DetailView,
-    View,
+    TemplateView,
 )
 
 from .forms import (
@@ -20,6 +20,8 @@ from .models import (
     País,
     Posición,
 )
+
+
 
 """views de jugador"""
 
@@ -52,6 +54,49 @@ class JugadorListView(ListView):
     def get_queryset(self):
         return Jugador.objects.all()    
  
+ 
+class JugadorSalario(ListView):
+    template_name = "jugador/sueldo-jugador.html"
+    context_object_name = 'salarios'
+    
+    def get_queryset(self):
+        return Jugador.objects.all()
+   
+   
+class SueldoBajo(ListView):
+    template_name = "jugador/sueldo-menor.html"
+    context_object_name = 'jugadores'
+    
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get("kword", '')
+        return Jugador.objects.sueldobajo(palabra_clave)
+    
+    
+class SueldoAlto(ListView):
+    template_name = "jugador/sueldo-alto.html"
+    context_object_name = 'jugadores'
+    
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get("kword", '')
+        return Jugador.objects.sueldoalto(palabra_clave)
+    
+
+class SueldoDif(ListView):
+    template_name = "jugador/diferencia.html"
+    context_object_name = 'jugadores'
+    
+    def get_queryset(self):
+        palabra_clave = self.request.GET.get("kword", '')
+        return Jugador.objects.Diferencia(palabra_clave)
+    
+class NumJugadores(ListView):
+    template_name = "jugador/numero.html"
+    context_object_name = 'jugadores'
+        
+    def get_queryset(self):
+
+        return Jugador.objects.num_jugadores()
+        
 
 class ListJugadorByKword(ListView):
     """lista jugadores por palabra clave"""
@@ -69,12 +114,27 @@ class ListJugadorByKword(ListView):
 class JugadorDetail(DetailView):
     model = Jugador
     template_name = "jugador/detail_jugador.html"
- 
+    
+    
+    
     
 class JugadorDeleteView(DeleteView):
     template_name = "jugador/del-jugador.html"
     model = Jugador
     success_url = 'list.jugador/' 
+    
+    
+
+class Registro(ListView):
+    template_name = "jugador/registro.html"
+    context_object_name = 'leer'
+    
+    def get_queryset(self):
+        with open('registro.txt', encoding='latin-1')as file_object:
+            leer = file_object.read()
+
+        return leer
+    
 
        
 
