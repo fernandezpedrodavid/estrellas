@@ -43,19 +43,44 @@ urlpatterns = [
         name='sueldos'
     ),
     path(
-        'sueldo-menor/',
-        views.SueldoBajo.as_view(),
-        name='sueldo-bajo'
+        'aumento/10/<pk>/',
+        views.JugadorUp10.as_view(),
+        name='diez'
     ),
     path(
-        'sueldo-mayor/',
-        views.SueldoAlto.as_view(),
-        name='sueldo-alto'
+        'aumento/15/<pk>/',
+        views.JugadorUp15.as_view(),
+        name='quince'
+    ),
+    path(
+        'aumento/20/<pk>/',
+        views.JugadorUp20.as_view(),
+        name='veinte'
+    ),
+    path(
+        'sueldo/anual/',
+        views.SueldoAnual.as_view(),
+        name='sueldoanual'
+    ),
+    path(
+        'sueldo/menor/',
+        views.SueldoMenor.as_view(),
+        name='sueldobajo'
+    ),
+    path(
+        'sueldo/mayor/',
+        views.SueldoMayor.as_view(),
+        name='sueldoalto'
     ),
     path(
         'diferencia/',
         views.SueldoDif.as_view(),
         name='sueldo-dif'
+    ),
+    path(
+        'sueldo-prom/',
+        views.SueldoPromedio.as_view(),
+        name='promedio'
     ),
     path(
         'num-jugadores/',
@@ -66,6 +91,11 @@ urlpatterns = [
         'leer-registro/',
         views.Registro.as_view(),
         name='leer'
+    ),
+    path(
+        'edad-actual/',
+        views.Edades.as_view(),
+        name='edad'
     ),
     
      
