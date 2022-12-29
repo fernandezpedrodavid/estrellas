@@ -38,42 +38,27 @@ urlpatterns = [
         name='jugadordetail'
     ),
     path(
+        'edad-jugador/',
+        views.JugadorEdad.as_view(),
+        name='edad'
+    ),
+    path(
         'sueldo-jugador/',
         views.JugadorSalario.as_view(),
         name='sueldos'
     ),
     path(
-        'aumento/10/<pk>/',
-        views.JugadorUp10.as_view(),
-        name='diez'
-    ),
-    path(
-        'aumento/15/<pk>/',
-        views.JugadorUp15.as_view(),
-        name='quince'
-    ),
-    path(
-        'aumento/20/<pk>/',
-        views.JugadorUp20.as_view(),
-        name='veinte'
-    ),
-    path(
-        'sueldo/anual/',
-        views.SueldoAnual.as_view(),
-        name='sueldoanual'
-    ),
-    path(
-        'sueldo/menor/',
-        views.SueldoMenor.as_view(),
+        'sueldo-menor/',
+        views.SueldoBajo.as_view(),
         name='sueldobajo'
     ),
     path(
-        'sueldo/mayor/',
-        views.SueldoMayor.as_view(),
+        'sueldo-mayor/',
+        views.SueldoAlto.as_view(),
         name='sueldoalto'
     ),
     path(
-        'diferencia/',
+        'sueldo-diferencia/',
         views.SueldoDif.as_view(),
         name='sueldo-dif'
     ),
@@ -81,6 +66,27 @@ urlpatterns = [
         'sueldo-prom/',
         views.SueldoPromedio.as_view(),
         name='promedio'
+    ),
+    
+    path(
+        'aumento10/<pk>/',
+        views.Aumento10.as_view(),
+        name='diez'
+    ),
+    path(
+        'aumento15/<pk>/',
+        views.Aumento15.as_view(),
+        name='quince'
+    ),
+    path(
+        'aumento20/<pk>/',
+        views.Aumentar20.as_view(),
+        name='veinte'
+    ),
+    path(
+        'sueldo-anual/',
+        views.SueldoAnual.as_view(),
+        name='sueldoanual'
     ),
     path(
         'num-jugadores/',
@@ -91,11 +97,6 @@ urlpatterns = [
         'leer-registro/',
         views.Registro.as_view(),
         name='leer'
-    ),
-    path(
-        'edad-actual/',
-        views.Edades.as_view(),
-        name='edad'
     ),
     
      

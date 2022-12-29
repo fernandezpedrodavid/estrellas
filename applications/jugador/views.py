@@ -3,14 +3,14 @@ from datetime import datetime
 
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
-from django.db.models import Count
+from django.db.models import Max, Min, Avg
+
 from django.views.generic import (
     CreateView,
     UpdateView,
     ListView,
     DeleteView,
     DetailView,
-    TemplateView,
 )
 from django.db.models import Max, Min, Avg
 
@@ -55,7 +55,18 @@ class JugadorListView(ListView):
     context_object_name = 'jugadores'
     
     def get_queryset(self):
-        return Jugador.objects.all()    
+        return Jugador.objects.all() 
+    
+    
+class JugadorEdad(ListView):
+    model = Jugador
+    template_name = "jugador/edad-actual.html"
+    context_object_name = 'jugadores'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['edad_actual'] = [(jugador, jugador.edad()) for jugador in context['jugadores']]
+        return context   
  
  
 class JugadorSalario(ListView):
@@ -66,24 +77,28 @@ class JugadorSalario(ListView):
         return Jugador.objects.all()
    
    
-class SueldoMenor(ListView):
+class SueldoBajo(ListView):
     model = Jugador
-    template_name = "jugador/sueldo-menor.html"
+    template_name = "jugador/sueldo-bajo.html"
     context_object_name = 'menor'
-    
+
     def get_queryset(self):
-        min_sueldo = Jugador.objects.aggregate(Min('sueldo'))['sueldo__min']
-        return Jugador.objects.filter(sueldo=min_sueldo)
+        sueldo_bajo = Jugador.objects.aggregate(Min('sueldo'))['sueldo__min']
+        return Jugador.objects.filter(sueldo=sueldo_bajo)
+        
+    
+    
+class SueldoAlto(ListView):
+    model = Jugador
+    template_name = "jugador/sueldo-alto.html"
+    context_object_name = 'mayor'
+
+    def get_queryset(self):
+        sueldo_alto = Jugador.objects.aggregate(Max('sueldo'))['sueldo__max']
+        return Jugador.objects.filter(sueldo=sueldo_alto)
     
 
-class SueldoMayor(ListView):
-    model = Jugador
-    template_name = "jugador/sueldo-mayor.html"
-    context_object_name = 'mayor'
-    
-    def get_queryset(self):
-        max_sueldo= Jugador.objects.aggregate(Max('sueldo'))['sueldo__max']
-        return Jugador.objects.filter(sueldo=max_sueldo)
+
 
 
 class SueldoAnual(ListView):
@@ -93,111 +108,112 @@ class SueldoAnual(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        jugadores = Jugador.objects.all()
-        informacion_anual = []
-        for jugador in jugadores:
-            informacion_anual.append({
+        jugadores= Jugador.objects.all()
+        informacion_jugador = []
+        for jugador in jugadores :
+            informacion_jugador_temp = {
                 'nombre': jugador.nombre,
                 'apellido': jugador.apellido,
                 'sueldo_anual': jugador.sueldo * 12,
-            })
-        context['informacion_anual'] = informacion_anual
+            }
+            informacion_jugador.append(informacion_jugador_temp)
+        context['informacion_jugador'] = informacion_jugador
         return context
 
 
 class SueldoDif(ListView):
     model = Jugador
     template_name = "jugador/diferencia.html"
-    context_object_name = 'jugadores'
-    
+    context_object_name = 'diferencia'
+
     def get_context_data(self, **kwargs):
         diferencia = super().get_context_data(**kwargs)
-        max_sueldo= Jugador.objects.aggregate(Max('sueldo'))['sueldo__max']
-        min_sueldo = Jugador.objects.aggregate(Min('sueldo'))['sueldo__min']
-        diferencia ['diferencia'] = max_sueldo - min_sueldo 
+        sueldo_alto = Jugador.objects.aggregate(Max('sueldo'))['sueldo__max']
+        sueldo_bajo = Jugador.objects.aggregate(Min('sueldo'))['sueldo__min']
+        diferencia['diferencia'] = sueldo_alto - sueldo_bajo
         return diferencia
     
-    
-class JugadorUp10(UpdateView):
-    model = Jugador
-    template_name = "jugador/up10.html"
-    fields = [
-        'sueldo',
-        'id'
-    ]
-    success_url = reverse_lazy('jugador_app:sueldos')
-    
-    def form_valid(self, form):
-        salario = form.instance.sueldo
-        aumento = 0.10
-        aumento10 = salario + (salario*aumento)
-        form.instance.sueldo = aumento10
-        form.save
-        return super().form_valid(form)
-
-
-class JugadorUp15(UpdateView):
-    model = Jugador
-    template_name = "jugador/up15.html"
-    fields = [
-        'sueldo',
-        'id'
-    ]
-    success_url = reverse_lazy('jugador_app:sueldos')
-    
-    def form_valid(self, form):
-        salario = form.instance.sueldo
-        aumento = 0.15
-        aumento15 = salario + (salario*aumento)
-        form.instance.sueldo = aumento15
-        form.save
-        return super().form_valid(form)
-    
-
-class JugadorUp20(UpdateView):
-    model = Jugador
-    template_name = "jugador/up20.html"
-    fields = [
-        'sueldo',
-        'id'
-    ]
-    success_url = reverse_lazy('jugador_app:sueldos')
-    
-    def form_valid(self, form):
-        salario = form.instance.sueldo
-        aumento = 0.20
-        aumento20 = salario + (salario*aumento)
-        form.instance.sueldo = aumento20
-        form.save
-        return super().form_valid(form)
-    
-    
-
-
     
 class SueldoPromedio(ListView):
     model = Jugador
     template_name = "jugador/sueldo-prom.html"
-    context_object_name = 'sueldos'
+    context_object_name = 'jugadores'
     
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['media_sueldo'] = Jugador.objects.aggregate(Avg('sueldo'))['sueldo__avg']
-        return context
+        promedio= super().get_context_data(**kwargs)
+        promedio['promedio'] = Jugador.objects.aggregate(Avg('sueldo'))['sueldo__avg']
+        return promedio
     
+class Aumento10(UpdateView):
+    model = Jugador
+    template_name = "jugador/suba10.html"
+    fields = [
+        'sueldo',
+        'id',
+    ]
+    success_url = reverse_lazy('jugador_app:jugadores')
+
+    def form_valid(self, form):
+        salario = form.instance.sueldo
+        x = 0.10
+        aumento10 = salario + (salario * x)
+        form.instance.sueldo = aumento10
+        form.save()
+
+        return super().form_valid(form)
+    
+    
+class Aumento15(UpdateView):
+    model = Jugador
+    template_name = "jugador/suba15.html"
+    fields = [
+        'sueldo',
+        'id',
+    ]
+    success_url = reverse_lazy('jugador_app:jugadores')
+
+    def form_valid(self, form):
+        salario = form.instance.sueldo
+        x = 0.15
+        aumento15 = salario + (salario * x)
+        form.instance.sueldo = aumento15
+        form.save()
+
+        return super().form_valid(form)
+    
+    
+class Aumentar20(UpdateView):
+    model = Jugador
+    template_name = "jugador/suba20.html"
+    fields = [
+        'sueldo',
+        'id',
+    ]
+    success_url = reverse_lazy('jugador_app:jugadores')
+
+    def form_valid(self, form):
+        salario = form.instance.sueldo
+        x = 0.20
+        aumento20 = salario + (salario * x)
+        form.instance.sueldo = aumento20
+        form.save()
+
+        return super().form_valid(form)
+    
+    
+
     
 class NumJugadores(ListView):
-    model = Jugador
     template_name = "jugador/numero.html"
     context_object_name = 'jugadores'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['num_jugadores'] = Jugador.objects.count()
-        return context
+        num_jugadores = super().get_context_data(**kwargs)
+        num_jugadores['num_jugadores'] = Jugador.objects.count()
+        return num_jugadores
+
     def get_queryset(self):
         return []
-
         
 class ListJugadorByKword(ListView):
     """lista jugadores por palabra clave"""
@@ -237,29 +253,15 @@ class Registro(ListView):
         return leer
     
 
-class Edades(ListView):
-    template_name = "jugador/edad-actual.html"
+class JugadorEdad(ListView):
     model = Jugador
-    fields = [
-        'nombre',
-        'apellido',
-        'fecha_nacimiento'
-    ]
-    context_object_name = 'edades' 
-
-    def calculate_age(self, born):
-        today = datetime.today()
-        return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+    template_name = "jugador/edad-actual.html"
+    context_object_name = 'jugadores'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        edades = []
-        for jugador in context['edades']:
-            born = jugador.fecha_nacimiento
-            age = self.calculate_age(born)
-            edades.append((jugador.nombre, jugador.apellido, age))
-        context['edades'] = edades
-        return context
+        context['edad_actual'] = [(jugador, jugador.edad()) for jugador in context['jugadores']]
+        return context 
 
           
 
@@ -285,8 +287,7 @@ class PaísJoin(ListView):
     
     def get_queryset(self):
         país_join = País.objects.select_related().all()
-        return país_join
-        
+        return país_join  
 
 """views de posición"""    
     
