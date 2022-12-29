@@ -38,6 +38,11 @@ urlpatterns = [
         name='jugadordetail'
     ),
     path(
+        'edad-jugador/',
+        views.JugadorEdad.as_view(),
+        name='edad'
+    ),
+    path(
         'sueldo-jugador/',
         views.JugadorSalario.as_view(),
         name='sueldos'
@@ -45,17 +50,42 @@ urlpatterns = [
     path(
         'sueldo-menor/',
         views.SueldoBajo.as_view(),
-        name='sueldo-bajo'
+        name='sueldobajo'
     ),
     path(
         'sueldo-mayor/',
         views.SueldoAlto.as_view(),
-        name='sueldo-alto'
+        name='sueldoalto'
     ),
     path(
-        'diferencia/',
+        'sueldo-diferencia/',
         views.SueldoDif.as_view(),
         name='sueldo-dif'
+    ),
+    path(
+        'sueldo-promedio/',
+        views.SueldoPromedio.as_view(),
+        name='promedio'
+    ),
+    path(
+        'aumento10/<pk>/',
+        views.Aumento10.as_view(),
+        name='diez'
+    ),
+    path(
+        'aumento15/<pk>/',
+        views.Aumento15.as_view(),
+        name='quince'
+    ),
+    path(
+        'aumento20/<pk>/',
+        views.Aumentar20.as_view(),
+        name='veinte'
+    ),
+    path(
+        'sueldo-anual/',
+        views.SueldoAnual.as_view(),
+        name='sueldoanual'
     ),
     path(
         'num-jugadores/',
@@ -83,7 +113,7 @@ urlpatterns = [
     path(
         'join-país/',
         views.PaísJoin.as_view(),
-        name='país_join'
+        name='join_país'
     ),
     
 #urls para posición

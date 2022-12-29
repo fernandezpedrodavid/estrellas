@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Sueldo Anual</th>
+      </tr>
+    </thead>
+    <tbody> 
+      {% for jugador in informacion_jugador %}
+         <tr>
+           <td>{{ jugador.nombre }}</td>
+           <td>{{ jugador.apellido }}</td>
+           <td>{{ jugador.sueldo_anual}}</td>
+         </tr>
+      {% endfor %}
+    </tbody>
+  </table> 
+{% endblock content %}
+
+  
+    
+  

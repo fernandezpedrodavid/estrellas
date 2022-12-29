@@ -1,6 +1,6 @@
 from django.db import models
+from datetime import datetime, timedelta
 
-from .managers import SueldoManager
 
 # Create your models here.
 class Jugador(models.Model):
@@ -12,12 +12,16 @@ class Jugador(models.Model):
     dni = models.PositiveIntegerField()  
     sueldo = models.PositiveIntegerField()
     
-    objects = SueldoManager()
     
     class Meta:       
 
         verbose_name = 'Jugador'
         verbose_name_plural = 'Jugadores'
+        
+    def edad(self):
+        hoy = datetime.now()
+        nacimiento = datetime.combine(self.fecha_nacimiento, datetime.min.time())
+        return (hoy - nacimiento).days // 365
 
     def __str__(self):
         return str(self.id)+ '-' + self.nombre + '-' + self.apellido + '-' + str(self.fecha_nacimiento)

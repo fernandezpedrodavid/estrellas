@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="card text-bg-success mb-3" style="max-width: 18rem;">
+    <div class="card-body">
+      <p class="card-text">
+        <div class="col-6 bg-success ">
+            <form method='POST'>{% csrf_token %}
+                {{ form.as_p}}
+                <button type='submit' class="bg-danger border text-white">20%</button>
+            </form>
+        </div>
+      </p>  
+    </div>
+<div>
+{% endblock content %}
