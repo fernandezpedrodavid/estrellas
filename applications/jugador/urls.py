@@ -23,6 +23,11 @@ urlpatterns = [
         name='jugadores'
     ),
     path(
+        'lista-pdf/',
+        views.PDFView.as_view(),
+        name='listapdf'
+    ),
+    path(
         'del.jugador/<pk>',
         views.JugadorDeleteView.as_view(),
         name='del-jugador'

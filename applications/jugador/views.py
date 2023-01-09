@@ -1,6 +1,7 @@
 import datetime
 from datetime import datetime
 
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.db.models import Max, Min, Avg
@@ -11,6 +12,7 @@ from django.views.generic import (
     ListView,
     DeleteView,
     DetailView,
+    View
 )
 from django.db.models import Max, Min, Avg
 
@@ -24,6 +26,7 @@ from .models import (
     País,
     Posición,
 )
+from .utils import Pasar_a_PDF
 
 """views de jugador"""
 #
@@ -56,6 +59,21 @@ class JugadorListView(ListView):
     
     def get_queryset(self):
         return Jugador.objects.all() 
+
+
+class PDFView(View):
+    
+    def get(self, request, *args, **kwargs):
+        jugador = Jugador.objects.all()
+        data = {
+            'jugador' : jugador,
+            'sueldoalto' : Jugador.objects.aggregate(Max('sueldo'))['sueldo__max'],
+            'sueldobajo' : Jugador.objects.aggregate(Min('sueldo'))['sueldo__min'],
+            'diferencia' : Jugador.objects.aggregate(Max('sueldo'))['sueldo__max'] - Jugador.objects.aggregate(Min('sueldo'))['sueldo__min'],
+            'sueldopromedio' : Jugador.objects.aggregate(Avg('sueldo'))['sueldo__avg']
+        }
+        pdf = Pasar_a_PDF("jugador/pdf.html", data)
+        return HttpResponse(pdf, content_type='application/pdf')
     
     
 class JugadorEdad(ListView):
@@ -97,9 +115,6 @@ class SueldoAlto(ListView):
         sueldo_alto = Jugador.objects.aggregate(Max('sueldo'))['sueldo__max']
         return Jugador.objects.filter(sueldo=sueldo_alto)
     
-
-
-
 
 class SueldoAnual(ListView):
     model = Jugador

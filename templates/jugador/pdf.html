@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <style>
+        @page {
+            size: a4 portrait;
+            @frame header_frame {           /* Static Frame */
+                -pdf-frame-content: header_content;
+                left: 50pt; width: 512pt; top: 50pt; height: 40pt;
+            };
+            @frame content_frame {          /* Content Frame */
+                left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+            };
+            @frame footer_frame {           /* Another static Frame */
+                -pdf-frame-content: footer_content;
+                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+            };
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>PDF</title>
+</head>    
+<body>
+    <!-- Content for Static Frame 'header_frame' -->
+    <div id="header_content"></div>
+    <img align="right" src='C:/Users/IBARRA/Documents/proyectos/jugadores/estrellas/emser.png' height='80' width='250'>
+    <h1> Reporte PDF</h1>
+    <table border="1">
+        <thead>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>fecha_nacimiento</th>
+            <th>dni</th>
+            <th>sueldo</th>
+        </thead>
+        <tbody>
+            {% for j in jugador %}
+                <tr>
+                    <td>{{ j.nombre }}</td>
+                    <td>{{ j.apellido }}</td>
+                    <td>{{ j.fecha_nacimiento }}</td>
+                    <td>{{ j.dni }}</td>
+                    <td>{{ j.sueldo }}</td>
+                </tr>
+            {% endfor %}  
+        </tbody>
+    </table>
+    <h2 align="right"> Sueldo mas alto : {{ sueldoalto }}</h2>
+    <h2 align="right"> Sueldo mas bajo: {{ sueldobajo }}</h2>
+    <h2 align="right"> Diferencia de sueldos: {{ diferencia }}</h2>
+    <h2 align="right"> Sueldo promedio: {{ sueldopromedio }}</h2>
+    <div> page <pdf:pagenumber> of <pdf:pagecount></div>
+</body>
+</html>
+
+

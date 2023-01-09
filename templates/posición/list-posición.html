@@ -12,6 +12,9 @@
             <th scope="col">Posición</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
+            <th scope="col">
+              <button  type="button" class="btn btn-outline-primary" onclick= "refrescar();">↻</button>
+            </th>
           </tr>
         </thead> 
         <tbody> 
@@ -21,6 +24,7 @@
                 <td>{{ p.posición}}</td>
                 <td>{{ p.jugador.nombre }}</td>
                 <td>{{ p.jugador.apellido }}</td>
+                <td></td>                
               </th>
             </tr> 
           {% endfor %}
